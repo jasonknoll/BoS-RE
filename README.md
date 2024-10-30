@@ -2,7 +2,7 @@
 
 This is a reverse engineering project to dissect one of my favorite retro games of all time, *Blades of Steel*, an ice hockey game originally released on the NES in 1988. I'm a more of a fan of the Game Boy and I'm learning how to develop Game Boy games myself, so I'm chosing the GB port of the game instead of the NES version. I just like the GB more and it would be great to learn some GB assembly patterns used in professional games. I've always like the idea of reverse engineering, but I never dove below the surface. Recently I've been inspired by projects such as [PsyDoom](https://github.com/BodbDearg/PsyDoom), [PSXDOOM-RE](https://github.com/Erick194/PSXDOOM-RE), and [oot](https://github.com/zeldaret/oot), where some very intelligent people have decompiled and RE'd some amazing games -- I may not be on the same level, but I'd love to get started learning.
 
-Unfortunately, I don't have a ton of time to dedicate to this project, but I hope to get to it when I can and eventually make some neat discoveries about game development from 30 years ago. 
+Unfortunately, I don't have a ton of time to dedicate to this project, as I'm focused on other homebrew development, but I hope to get to it when I can and eventually make some neat discoveries about game development from 30 years ago. 
 
 ## Disassembly
 
