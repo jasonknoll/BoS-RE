@@ -1013,27 +1013,27 @@ db $1C      ; Header Checksum: OK
 dw $218A    ; Global Checksum: OK
 
 _LABEL_150_:
-	di ; disable interrupts
-	xor a ; set a to 0
-	ldh [rIF], a ; Set interrupt flag to 0 
-	ldh [rIE], a ; Set interrupt enable to 0
-	ld sp, $DFFF ; Set the stack pointer to $DFFF (end of the working RAM)
+	di 				; disable interrupts
+	xor a 			; set a to 0
+	ldh [rIF], a 	; Set interrupt flag to 0 
+	ldh [rIE], a 	; Set interrupt enable to 0
+	ld sp, $DFFF 	; Set the stack pointer to $DFFF (end of the working RAM)
 
 
 _LABEL_159_:
-	ldh a, [rLCDC] ; Load $91 into A from the LCD control (%10010001)
-	bit 7, a ; Checks if the most significant bit is 1 
-	jr z, _LABEL_165_ ; if the zero-flag is set, jump to label_165
-	ldh a, [rLY] ; Load value from the LCD Y coordinate value into a
-	cp $92 ; Compare A to $92 (146 in decimal)
-	jr c, _LABEL_159_ ; if carry flag is set, loop back to label_159
+	ldh a, [rLCDC] 		; Load $91 into A from the LCD control (%10010001)
+	bit 7, a 			; Checks if the most significant bit is 1 (may set the c flag)
+	jr z, _LABEL_165_ 	; if the zero-flag is set, jump to label_165
+	ldh a, [rLY]		; Load value from the LCD Y coordinate value into a
+	cp $92 				; Compare A to $92 (146 in decimal)
+	jr c, _LABEL_159_ 	; if carry flag is set, loop back to label_159
 
 _LABEL_165_:
-	xor a
-	ldh [rLCDC], a
+	xor a 				; Set a to 0 again	
+	ldh [rLCDC], a 		;		
 	ld a, $01
 	ld [$2180], a
-	ld hl, _RAM_C000_
+	ld hl, _RAM_C000_	;
 	ld de, _RAM_C001_
 	ld bc, $1BFF
 	ld [hl], $00
