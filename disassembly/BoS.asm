@@ -1,5 +1,6 @@
 ; This disassembly was created using Emulicious (https://www.emulicious.net)
 
+; Init work RAM $C000-CFFF
 SECTION "wram_c000", WRAM0[$C000]
 _RAM_C000_: db
 _RAM_C001_: db
@@ -208,6 +209,8 @@ _RAM_CFE4_: db
 SECTION "wram_cff0", WRAM0[$CFF0]
 _RAM_CFF0_: db
 
+
+; More Work Ram $D000-DFFF
 SECTION "wram_d000", WRAMX[$D000]
 _RAM_D000_: db
 _RAM_D001_: db
@@ -796,7 +799,7 @@ SECTION "hram_ffb0", HRAM[$FFB0]
 _RAM_FFB0_: db
 _RAM_FFB1_: db
 
-; Ports
+; Define register labels
 DEF rP1 EQU $00
 DEF rSB EQU $01
 DEF rSC EQU $02
@@ -984,6 +987,7 @@ db $C3, $F5, $10, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C
 db $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D
 db $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00, $C3, $8D, $00
 
+; Entry point
 _LABEL_100_:
 	nop
 	jp _LABEL_150_
@@ -1009,18 +1013,21 @@ db $1C      ; Header Checksum: OK
 dw $218A    ; Global Checksum: OK
 
 _LABEL_150_:
-	di
-	xor a
-	ldh [rIF], a
-	ldh [rIE], a
-	ld sp, $DFFF
+	di ; disable interrupts
+	xor a ; set a to 0
+	ldh [rIF], a ; Set interrupt flag to 0 
+	ldh [rIE], a ; Set interrupt enable to 0
+	ld sp, $DFFF ; Set the stack pointer to $DFFF (end of the working RAM)
+
+
 _LABEL_159_:
-	ldh a, [rLCDC]
-	bit 7, a
-	jr z, _LABEL_165_
-	ldh a, [rLY]
-	cp $92
-	jr c, _LABEL_159_
+	ldh a, [rLCDC] ; Load $91 into A from the LCD control (%10010001)
+	bit 7, a ; Checks if the most significant bit is 1 
+	jr z, _LABEL_165_ ; if the zero-flag is set, jump to label_165
+	ldh a, [rLY] ; Load value from the LCD Y coordinate value into a
+	cp $92 ; Compare A to $92 (146 in decimal)
+	jr c, _LABEL_159_ ; if carry flag is set, loop back to label_159
+
 _LABEL_165_:
 	xor a
 	ldh [rLCDC], a
