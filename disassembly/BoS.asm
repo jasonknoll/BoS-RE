@@ -1031,7 +1031,7 @@ _LABEL_159_:
 _LABEL_165_:
 	xor a               ; Set a to 0 again	
 	ldh [rLCDC], a      ; Turn off the LCD I think		
-	ld a, $01
+	ld a, $01           ; Set a to 1
 	ld [$2180], a
 	ld hl, _RAM_C000_	
 	ld de, _RAM_C001_
@@ -1065,14 +1065,14 @@ _LABEL_1AB_:
 	ld [_RAM_D819_], a
 	jr _LABEL_1AB_
 
-_LABEL_1BA_:
-	ld hl, _RAM_D825_
-	ldi a, [hl]
-	or a
-	ret z
-	xor a
-	dec a
-	ld [hl], a
+_LABEL_1BA_:            ; In player select loop, called from $2BC
+	ld hl, _RAM_D825_   ; Load D825 into hl register
+	ldi a, [hl]         ; Load hl into a and then increment hl after
+	or a                ; performs or operation a with itself to set the zero flag
+	ret z               ; if 0, z is 1, return back to label_2BC
+	xor a               ; set a to 0 (?)
+	dec a               ; decrement a? if it's 0 carry clag set?
+	ld [hl], a          ; load a into hl 
 _LABEL_1C3_:
 	dec a
 	jr nz, _LABEL_1C3_
@@ -1177,11 +1177,11 @@ _LABEL_27D_:
 	ld a, [_RAM_D804_]
 	and $02
 	jr nz, _LABEL_2C6_
-_LABEL_2BC_:
-	call _LABEL_1BA_
-	ld a, [_RAM_D804_]
-	bit 1, a
-	jr z, _LABEL_2BC_
+_LABEL_2BC_:            ; This is in the player select loop
+	call _LABEL_1BA_    ; It calls this (don't know what it does)
+	ld a, [_RAM_D804_]  ; Loads whatever is in D804
+	bit 1, a            ; Checks the first bit of the a register
+	jr z, _LABEL_2BC_   ; 1 == loop
 _LABEL_2C6_:
 	xor a
 	ld [_RAM_D847_], a
