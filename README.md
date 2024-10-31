@@ -23,3 +23,8 @@ Assuming you have RGBDS properly setup and in your environment variables, you ca
     - [ ] Add my own sprite
 - [ ] ...
  
+
+
+*This project is intended solely for educational and research purposes. It is not intended to infringe on any copyrights, trademarks, or intellectual property rights. All original content belongs to its respective owners. Please use responsibly and in compliance with applicable laws.*
+
+If I need to take this project down at anytime, so be it. I doubt it will ever gain enough attention (cope)
