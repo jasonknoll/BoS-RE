@@ -1056,6 +1056,9 @@ _LABEL_165_:
 	call _LABEL_232C_
 	call _LABEL_BCB_
 	ei
+
+; Both 01AB and 01BA run no matter which mode we are in
+; This may be the main infinite loop
 _LABEL_1AB_:
 	call _LABEL_1BA_
 	ld a, [_RAM_D819_]
@@ -1067,12 +1070,14 @@ _LABEL_1AB_:
 
 _LABEL_1BA_:            ; In player select loop, called from $2BC
 	ld hl, _RAM_D825_   ; Load D825 into hl register
-	ldi a, [hl]         ; Load hl into a and then increment hl after
+	ldi a, [hl]         ; Load hl into a and then increment hl's address 
+	                    ; It's moving the location of HL between D825 and D826 ( why? )
 	or a                ; performs or operation a with itself to set the zero flag
 	ret z               ; if 0, z is 1, return back to label_2BC
 	xor a               ; set a to 0 (?)
 	dec a               ; decrement a? if it's 0 carry clag set?
 	ld [hl], a          ; load a into hl 
+
 _LABEL_1C3_:
 	dec a
 	jr nz, _LABEL_1C3_
@@ -1180,8 +1185,8 @@ _LABEL_27D_:
 _LABEL_2BC_:            ; This is in the player select loop
 	call _LABEL_1BA_    ; It calls this (don't know what it does)
 	ld a, [_RAM_D804_]  ; Loads whatever is in D804
-	bit 1, a            ; Checks the first bit of the a register
-	jr z, _LABEL_2BC_   ; 1 == loop
+	bit 1, a            ; Checks the 2nd bit of the a register ( 0 index )
+	jr z, _LABEL_2BC_   ; last operation == 0, so z == 1 { loop }
 _LABEL_2C6_:
 	xor a
 	ld [_RAM_D847_], a
