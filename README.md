@@ -8,7 +8,7 @@ Unfortunately, I don't have a ton of time to dedicate to this project, as I'm fo
 
 Disassembly of the original ROM file was completed using [Emulicious](https://emulicious.net/) and the ROM in this repo is built using the [RGBDS](https://github.com/gbdev/rgbds) toolchain. Emulicious is a powerful emulator with a great debugger that I'll be using to dig through this game. 
 
-Assuming you have RGBDS properly setup and in your environment variables, you can build the rom yourself with the appropriate `build` script for your operating system. The `BoS.gb` file will pop up in the `rom` folder. *These will not work if RGBDS and its toolchain are not in your environment variables*. 
+Assuming you have RGBDS properly setup and in your environment, you can build the rom yourself with the appropriate `build` script for your operating system. The `BoS.gb` file will pop up in the `rom` folder. *These will not work if RGBDS and its toolchain are not in your environment variables*. 
 
 ## TODOs
 
